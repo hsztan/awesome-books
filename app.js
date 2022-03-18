@@ -26,11 +26,22 @@ setInterval(() => {
   dateElem.innerText = new Date();
 }, 1000);
 
+// Helper to display text if no books in list
+const checkAndDisplayEmptyList = () => {
+  const messageEle = document.getElementById('empty-list');
+  if (!data.length) {
+    messageEle.classList.add('show');
+  } else {
+    messageEle.classList.remove('show');
+  }
+};
+
 // Add eventlisteners to nav buttons
 listBtn.addEventListener('click', () => {
   bookListSection.classList.add('show');
   addBookSection.classList.remove('show');
   contactSection.classList.remove('show');
+  checkAndDisplayEmptyList();
 });
 
 addBookBtn.addEventListener('click', () => {
@@ -111,12 +122,6 @@ class Book {
   }
 }
 
-// Helper to display text if no books in list
-const displayBookListEmpty = () => {
-  bookSection.innerText = 'Please add a book';
-  bookSection.style.textAlign = 'center';
-};
-
 // Event lister to add books and save them
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -143,13 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-  if (!data.length) {
-    displayBookListEmpty();
-  }
+  checkAndDisplayEmptyList();
 });
 
-bookSection.addEventListener('click', () => {
-  if (!data.length) {
-    displayBookListEmpty();
-  }
-});
+bookSection.addEventListener('click', checkAndDisplayEmptyList);
