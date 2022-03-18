@@ -26,11 +26,22 @@ setInterval(() => {
   dateElem.innerText = new Date();
 }, 1000);
 
+// Helper to display text if no books in list
+const checkAndDisplayEmptyList = () => {
+  const messageEle = document.getElementById('empty-list');
+  if (!data.length) {
+    messageEle.classList.add('show');
+  } else {
+    messageEle.classList.remove('show');
+  }
+};
+
 // Add eventlisteners to nav buttons
 listBtn.addEventListener('click', () => {
   bookListSection.classList.add('show');
   addBookSection.classList.remove('show');
   contactSection.classList.remove('show');
+  checkAndDisplayEmptyList();
 });
 
 addBookBtn.addEventListener('click', () => {
@@ -137,4 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+  checkAndDisplayEmptyList();
 });
+
+bookSection.addEventListener('click', checkAndDisplayEmptyList);

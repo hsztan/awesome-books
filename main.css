@@ -82,6 +82,16 @@ button,
   box-shadow: 2px 2px black;
 }
 
+#empty-list {
+  display: none;
+  text-align: center;
+  font-style: italic;
+}
+
+#empty-list.show {
+  display: block;
+}
+
 #submit {
   width: 40px;
 }
