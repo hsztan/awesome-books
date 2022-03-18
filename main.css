@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: fantasy, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 ul,
 a {
   text-decoration: none;
