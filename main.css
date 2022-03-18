@@ -6,16 +6,13 @@
 
 body {
   font-family: fantasy, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 1rem;
 }
 
 ul,
 a {
   text-decoration: none;
   list-style: none;
-}
-
-body {
-  padding: 1rem;
 }
 
 section {
