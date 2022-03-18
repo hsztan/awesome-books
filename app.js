@@ -134,6 +134,14 @@ form.addEventListener('submit', (e) => {
     .addEventListener('click', (e) => {
       book.deleteBookValues(e.target);
     });
+  // Reset form values and inform successful save
+  bookTitle.value = '';
+  bookAuthor.value = '';
+  const headerElem = document.querySelector('.add-book h2');
+  headerElem.textContent = 'Book was successfully added to list!';
+  setTimeout(() => {
+    headerElem.textContent = 'Add a new book';
+  }, 2000);
 });
 
 // Event listener to display all saved books and add event listeners to each remove button
