@@ -111,6 +111,12 @@ class Book {
   }
 }
 
+// Helper to display text if no books in list
+const displayBookListEmpty = () => {
+  bookSection.innerText = 'Please add a book';
+  bookSection.style.textAlign = 'center';
+};
+
 // Event lister to add books and save them
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -136,5 +142,14 @@ window.addEventListener('DOMContentLoaded', () => {
         new Book().deleteBookValues(e.target);
       });
     });
+  }
+  if (!data.length) {
+    displayBookListEmpty();
+  }
+});
+
+bookSection.addEventListener('click', () => {
+  if (!data.length) {
+    displayBookListEmpty();
   }
 });
