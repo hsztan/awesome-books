@@ -1,41 +1,15 @@
-import data from './modules/data.js';
 import Book from './modules/Book.js';
 import elem from './modules/domElements.js';
 import displayTime from './modules/displayTime.js';
+import addNavListeners from './modules/addNavListeners.js';
+import checkAndDisplayEmptyList from './modules/checkAndDisplayList.js';
 // show bookList
 elem.bookListSection.classList.add('show');
 
 displayTime();
 
-// Helper to display text if no books in list
-const checkAndDisplayEmptyList = () => {
-  const messageEle = document.getElementById('empty-list');
-  if (!data.length) {
-    messageEle.classList.add('show');
-  } else {
-    messageEle.classList.remove('show');
-  }
-};
-
 // Add eventlisteners to nav buttons
-elem.listBtn.addEventListener('click', () => {
-  elem.bookListSection.classList.add('show');
-  elem.addBookSection.classList.remove('show');
-  elem.contactSection.classList.remove('show');
-  checkAndDisplayEmptyList();
-});
-
-elem.addBookBtn.addEventListener('click', () => {
-  elem.addBookSection.classList.add('show');
-  elem.bookListSection.classList.remove('show');
-  elem.contactSection.classList.remove('show');
-});
-
-elem.contactBtn.addEventListener('click', () => {
-  elem.contactSection.classList.add('show');
-  elem.addBookSection.classList.remove('show');
-  elem.bookListSection.classList.remove('show');
-});
+addNavListeners();
 
 // Event lister to add books and save them
 elem.form.addEventListener('submit', (e) => {
