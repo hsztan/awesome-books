@@ -1,30 +1,12 @@
-import data from './data.js';
-
-// Select main elements
-const form = document.querySelector('#book-form');
-const bookTitle = document.querySelector('#title');
-const bookAuthor = document.querySelector('#author');
-const bookSection = document.querySelector('.list');
-const dateElem = document.getElementById('date');
-
-// Select sections
-const bookListSection = document.querySelector('.book-list');
-const addBookSection = document.querySelector('.add-book');
-const contactSection = document.querySelector('.contact');
-
-// Select nav anchor tags
-const listBtn = document.getElementById('listNav');
-const addBookBtn = document.getElementById('addBookNav');
-const contactBtn = document.getElementById('contactNav');
+import data from './modules/data.js';
+import Book from './modules/Book.js';
+import elem from './modules/domElements.js';
+import displayTime from './modules/displayTime.js';
 
 // show bookList
-bookListSection.classList.toggle('show');
+elem.bookListSection.classList.add('show');
 
-// show date
-dateElem.innerText = new Date();
-setInterval(() => {
-  dateElem.innerText = new Date();
-}, 1000);
+displayTime();
 
 // Helper to display text if no books in list
 const checkAndDisplayEmptyList = () => {
@@ -37,95 +19,29 @@ const checkAndDisplayEmptyList = () => {
 };
 
 // Add eventlisteners to nav buttons
-listBtn.addEventListener('click', () => {
-  bookListSection.classList.add('show');
-  addBookSection.classList.remove('show');
-  contactSection.classList.remove('show');
+elem.listBtn.addEventListener('click', () => {
+  elem.bookListSection.classList.add('show');
+  elem.addBookSection.classList.remove('show');
+  elem.contactSection.classList.remove('show');
   checkAndDisplayEmptyList();
 });
 
-addBookBtn.addEventListener('click', () => {
-  addBookSection.classList.add('show');
-  bookListSection.classList.remove('show');
-  contactSection.classList.remove('show');
+elem.addBookBtn.addEventListener('click', () => {
+  elem.addBookSection.classList.add('show');
+  elem.bookListSection.classList.remove('show');
+  elem.contactSection.classList.remove('show');
 });
 
-contactBtn.addEventListener('click', () => {
-  contactSection.classList.add('show');
-  addBookSection.classList.remove('show');
-  bookListSection.classList.remove('show');
+elem.contactBtn.addEventListener('click', () => {
+  elem.contactSection.classList.add('show');
+  elem.addBookSection.classList.remove('show');
+  elem.bookListSection.classList.remove('show');
 });
-
-class Book {
-  constructor(title = '', author = '') {
-    this.title = title;
-    this.author = author;
-    this.index = null;
-  }
-
-  #displayBackground(target, idx = this.index) {
-    if (idx % 2 === 0) {
-      target.style.backgroundColor = 'lightgray';
-    } else {
-      target.style.backgroundColor = 'white';
-    }
-  }
-
-  #preserveBookData() {
-    this.booksData = JSON.stringify(data);
-    window.localStorage.setItem('books', this.booksData);
-  }
-
-  saveBookValues() {
-    data.push({ author: this.author, title: this.title });
-    this.#preserveBookData();
-    this.index = data.length - 1;
-  }
-
-  displayBookValues() {
-    this.bookCard = document.createElement('div');
-    this.bookCard.classList.add('book-card');
-    this.bookCard.innerHTML = `
-      <h3 class="book">"${this.title} by ${this.author}"</h3>
-      <button class="btn-remove" id="btn-rem-${this.index}" data-index="${this.index}"
-      type="button">Remove</button>
-  `;
-    bookSection.appendChild(this.bookCard);
-    this.#displayBackground(this.bookCard);
-  }
-
-  deleteBookValues(target) {
-    data.splice(this.bookIndex, 1);
-    this.#preserveBookData();
-    target.parentElement.remove();
-    // replace all button data values to reset their index
-    const remBookBtns = document.querySelectorAll('.btn-remove');
-    const allBooks = document.querySelectorAll('.book-card');
-    if (remBookBtns.length > 0) {
-      remBookBtns.forEach((btn, i) => {
-        btn.dataset.index = i;
-        this.#displayBackground(allBooks[i], i);
-      });
-    }
-  }
-
-  displayAllBooksValues() {
-    data.push(...JSON.parse(localStorage.getItem('books')));
-    data.forEach((storedBook) => {
-      this.book = new Book(storedBook.title, storedBook.author);
-      this.book.displayBookValues();
-    });
-    const allBooksElem = document.querySelectorAll('.book-card');
-    allBooksElem.forEach((bookElem, idx) => {
-      this.#displayBackground(bookElem, idx);
-    });
-  }
-}
 
 // Event lister to add books and save them
-form.addEventListener('submit', (e) => {
+elem.form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const book = new Book(bookTitle.value, bookAuthor.value);
+  const book = new Book(elem.bookTitle.value, elem.bookAuthor.value);
   book.saveBookValues();
   book.displayBookValues();
   // Event listener to remove a book
@@ -135,8 +51,8 @@ form.addEventListener('submit', (e) => {
       book.deleteBookValues(e.target);
     });
   // Reset form values and inform successful save
-  bookTitle.value = '';
-  bookAuthor.value = '';
+  elem.bookTitle.value = '';
+  elem.bookAuthor.value = '';
   const headerElem = document.querySelector('.add-book h2');
   headerElem.textContent = 'Book was successfully added to list!';
   setTimeout(() => {
@@ -159,4 +75,4 @@ window.addEventListener('DOMContentLoaded', () => {
   checkAndDisplayEmptyList();
 });
 
-bookSection.addEventListener('click', checkAndDisplayEmptyList);
+elem.bookSection.addEventListener('click', checkAndDisplayEmptyList);
