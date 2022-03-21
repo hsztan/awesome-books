@@ -2,7 +2,6 @@ import data from './modules/data.js';
 import Book from './modules/Book.js';
 import elem from './modules/domElements.js';
 import displayTime from './modules/displayTime.js';
-
 // show bookList
 elem.bookListSection.classList.add('show');
 

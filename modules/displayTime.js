@@ -1,6 +1,10 @@
-import { DateTime } from 'luxon';
-// show date
-elem.dateElem.innerText = new Date();
-setInterval(() => {
-  elem.dateElem.innerText = new Date();
-}, 1000);
+import { DateTime } from '../node_modules/luxon/src/luxon.js';
+import elem from './domElements.js';
+
+const displayTime = () => {
+  elem.dateElem.innerText = DateTime.now().toFormat('FFF');
+  setInterval(() => {
+    elem.dateElem.innerText = DateTime.now().toFormat('FFF');
+  }, 1000);
+};
+export default displayTime;
